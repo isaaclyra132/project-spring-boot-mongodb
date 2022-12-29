@@ -1,6 +1,7 @@
 package br.isaaclyra.workshopmongo.services;
 
 import br.isaaclyra.workshopmongo.domain.User;
+import br.isaaclyra.workshopmongo.dto.UserDTO;
 import br.isaaclyra.workshopmongo.repository.UserRepository;
 import br.isaaclyra.workshopmongo.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,13 @@ public class UserService {
     public User findById(String id) {
         Optional<User> obj = userRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+    }
+
+    public User insert(User obj) {
+        return userRepository.insert(obj);
+    }
+
+    public User fromDTO(UserDTO objDto) {
+        return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
     }
 }
