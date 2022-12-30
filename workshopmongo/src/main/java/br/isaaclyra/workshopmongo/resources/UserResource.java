@@ -1,5 +1,6 @@
 package br.isaaclyra.workshopmongo.resources;
 
+import br.isaaclyra.workshopmongo.domain.Post;
 import br.isaaclyra.workshopmongo.domain.User;
 import br.isaaclyra.workshopmongo.dto.UserDTO;
 import br.isaaclyra.workshopmongo.repository.UserRepository;
@@ -59,5 +60,11 @@ public class UserResource {
         obj.setId(id);
         obj = userService.update(obj);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/{id}/posts", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = userService.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 }
