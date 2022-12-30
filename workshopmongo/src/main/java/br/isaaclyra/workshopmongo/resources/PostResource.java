@@ -3,6 +3,7 @@ package br.isaaclyra.workshopmongo.resources;
 import br.isaaclyra.workshopmongo.domain.Post;
 import br.isaaclyra.workshopmongo.domain.User;
 import br.isaaclyra.workshopmongo.dto.UserDTO;
+import br.isaaclyra.workshopmongo.resources.util.URL;
 import br.isaaclyra.workshopmongo.services.PostService;
 import br.isaaclyra.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,12 @@ public class PostResource {
     public ResponseEntity<Post> findByID(@PathVariable String id) {
         Post obj = postService.findById(id);
         return ResponseEntity.ok().body(obj);
+    }
+
+    @RequestMapping(value = "/titlesearch", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findByTitle(@RequestParam(value = "text", defaultValue = "") String text) {
+        text = URL.decodeParam(text);
+        List<Post> list = postService.findByTitle(text);
+        return ResponseEntity.ok().body(list);
     }
 }
